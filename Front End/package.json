@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "mongodb": "^6.10.0"
+  },
+
+  "scripts": {
+  "build": "ng build --configuration=production"
+}
+
+  
+}
