@@ -2,19 +2,11 @@
   "dependencies": {
     "mongodb": "^6.10.0"
   },
-
   "scripts": {
-  "build": "ng build --configuration=production"
-},
-  "builds": [
-    {
-      "src": "package.json",
-      "use": "@vercel/node",
-      "config": {
-        "buildCommand": "npx ng build --prod"
-      }
-    }
-  ]
+    "build": "ng build --configuration=production"  
+  },
+  "devDependencies": {
+    "@angular/cli": "^15.0.0"  
+  }
 
-  
 }
