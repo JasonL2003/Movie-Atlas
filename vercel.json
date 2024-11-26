@@ -6,7 +6,17 @@
         "config": {
           "buildCommand": "npx ng build --prod"
         }
+      },
+      {
+        "src": "./BackEnd/index.js",
+        "use": "@vercel/node"
       }
-    ]
+    ],
+    "routes": [
+      {
+        "src": "/(.*)",
+        "dest": "/index.js"
+      }
+    ]   
   }
   
