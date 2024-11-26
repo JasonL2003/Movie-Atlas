@@ -5,7 +5,16 @@
 
   "scripts": {
   "build": "ng build --configuration=production"
-}
+},
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/node",
+      "config": {
+        "buildCommand": "npx ng build --prod"
+      }
+    }
+  ]
 
   
 }
