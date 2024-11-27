@@ -2,27 +2,10 @@
   "dependencies": {
     "mongodb": "^6.10.0"
   },
-  "version": 2,
-  "scripts": {
-    "build": "ng build --configuration=production"
-  },
-  "builds": [
-    {
-      "src": "FrontEnd/package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "buildCommand": "npm run build",
-        "outputDirectory": "FrontEnd/dist"
-      }
-    }
-  ],
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "/FrontEnd/index.html"
+      "dest": "/index.html"
     }
-  ],
-  "devDependencies": {
-    "@angular/cli": "^19.0.2"
-  }
+  ]
 }
