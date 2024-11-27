@@ -1,8 +1,12 @@
+import dotenv from 'dotenv'
+dotenv.config();
+
 const url = new URL(location.href);
 const movieId = url.searchParams.get("id");
 const movieTitle = url.searchParams.get("title");
 
-const APILINK = 'http://localhost:8000/api/v1/reviews/';
+const base_url = process.env.BASE_URL;
+APILINK = `${base_url}/api/v1/reviews/`;
 
 const main = document.getElementById("section");
 const title = document.getElementById("title");
