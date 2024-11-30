@@ -1,12 +1,14 @@
-import dotenv from 'dotenv'
-dotenv.config();
-
 const url = new URL(location.href);
 const movieId = url.searchParams.get("id");
 const movieTitle = url.searchParams.get("title");
 
-const base_url = process.env.BASE_URL;
-APILINK = `${base_url}/api/v1/reviews/`;
+//const base_url = process.env.NEXT_PUBLIC_BASE_URL;
+//APILINK = `${base_url}/api/v1/reviews/`;
+
+//APILINK = 'http://localhost:8000/api/v1/reviews/'; //Local
+APILINK = 'https://movie-search-vercel-server.vercel.app/api/v1/reviews/'; //Vercel
+
+
 
 const main = document.getElementById("section");
 const title = document.getElementById("title");
