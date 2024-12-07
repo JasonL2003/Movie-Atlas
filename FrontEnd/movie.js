@@ -5,8 +5,11 @@ const movieTitle = url.searchParams.get("title");
 //const base_url = process.env.NEXT_PUBLIC_BASE_URL;
 //APILINK = `${base_url}/api/v1/reviews/`;
 
-//APILINK = 'http://localhost:8000/api/v1/reviews/'; //Local
-APILINK = 'https://movie-search-vercel-server.vercel.app/api/v1/reviews/'; //Vercel
+
+//Change links!
+
+APILINK = 'http://localhost:8000/api/v1/reviews/'; //Local
+//APILINK = 'https://movie-search-vercel-server.vercel.app/api/v1/reviews/'; //Vercel
 
 
 
@@ -38,7 +41,7 @@ main.appendChild(div_new)
 returnReviews(APILINK);
 
 function returnReviews(url) {
-    fetch(url + "movie/" + movieId, { mode: 'cors' }) 
+    fetch(url + "movie/" + movieId) 
         .then(res => res.json())
         .then(function(data) { 
             console.log(data);
