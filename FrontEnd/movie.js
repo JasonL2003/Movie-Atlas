@@ -38,7 +38,7 @@ main.appendChild(div_new)
 returnReviews(APILINK);
 
 function returnReviews(url) {
-    fetch(url + "movie/" + movieId) 
+    fetch(url + "movie/" + movieId, { mode: 'cors' }) 
         .then(res => res.json())
         .then(function(data) { 
             console.log(data);
