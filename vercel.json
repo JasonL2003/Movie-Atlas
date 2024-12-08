@@ -2,21 +2,14 @@
   "version": 2,
   "builds": [
     {
-      "src": "package.json",
-      "use": "@vercel/node",
-      "config": {
-        "buildCommand": "npx ng build --prod"
-      }
-    },
-    {
-      "src": "./BackEnd/index.js",
+      "src": "BackEnd/index.js",
       "use": "@vercel/node"
     }
   ],
   "routes": [
     {
-      "src": "/(.*)",
-      "dest": "/BackEnd/index.js"
+      "src": "/api/v1/reviews/(.*)",
+      "dest": "BackEnd/index.js"
     }
   ]
 }

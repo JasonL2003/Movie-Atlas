@@ -21,6 +21,12 @@ import reviews from './api/reviews.route.js';
 
 const app = express();
 
+app.use((req, res, next) => {
+  console.log('Request origin:', req.get('origin'));
+  console.log('Request headers:', req.headers);
+  next();
+});
+
 app.use(cors({
   origin: '*',
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],  
