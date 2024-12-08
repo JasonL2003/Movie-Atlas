@@ -1,4 +1,4 @@
-/* WORKING CODE FOR LOCAL DEV - app.use(cors()) allows all origins
+/*LOCAL DEV - app.use(cors()) allows all origins
 import express from "express"
 import cors from "cors"
 import reviews from "./api/reviews.route.js"
@@ -14,6 +14,7 @@ app.use("*", (req, res) => res.status(404).json({error: "not found"}))
 export default app 
 */
 
+//Vercel Code
 import express from 'express';
 import cors from 'cors';
 import reviews from './api/reviews.route.js';
@@ -29,7 +30,7 @@ app.use(cors({
 app.use(express.json());
 
 app.get('/', (req, res) => {
-  res.json({ message: 'Server is running' });
+  res.send('Server is running!'); 
 });
 
 app.use('/api/v1/reviews', reviews);
