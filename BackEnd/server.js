@@ -14,7 +14,6 @@ app.use("*", (req, res) => res.status(404).json({error: "not found"}))
 export default app 
 */
 
-//ISSUE WITH THIS CODE: I NEED TO USE origin: '*' FOR IT TO WORK BUT ITS NOT SAFE, FIND A WAY TO ALLOW THE CORRECT ORIGINS
 import express from 'express';
 import cors from 'cors';
 import reviews from './api/reviews.route.js';
