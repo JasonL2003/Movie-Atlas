@@ -16,7 +16,6 @@ export default class ReviewsDAO {
 
     static async getReview(reviewId) {
         try {
-            // Try-catch block for ObjectId creation
             let objectId;
             try {
                 objectId = new ObjectId(reviewId.toString());

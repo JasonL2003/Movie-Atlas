@@ -1,4 +1,4 @@
-/* WORKING CODE
+/* WORKING CODE FOR LOCAL DEV - app.use(cors()) allows all origins
 import express from "express"
 import cors from "cors"
 import reviews from "./api/reviews.route.js"
@@ -20,19 +20,17 @@ import reviews from './api/reviews.route.js';
 
 const app = express();
 
-app.use((req, res, next) => {
-  console.log('Request origin:', req.get('origin'));
-  console.log('Request headers:', req.headers);
-  next();
-});
-
 app.use(cors({
-  origin: '*',
+  origin: 'https://movie-search-vercel-client.vercel.app',
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],  
   allowedHeaders: ['Content-Type', 'Authorization'],
 }));
 
 app.use(express.json());
+
+app.get('/', (req, res) => {
+  res.json({ message: 'Server is running' });
+});
 
 app.use('/api/v1/reviews', reviews);
 

@@ -2,13 +2,9 @@ const url = new URL(location.href);
 const movieId = url.searchParams.get("id");
 const movieTitle = url.searchParams.get("title");
 
-//const base_url = process.env.NEXT_PUBLIC_BASE_URL;
-//APILINK = `${base_url}/api/v1/reviews/`;
-
-
 //Change links!
 
-//APILINK = 'http://localhost:8000/api/v1/reviews/'; //Local
+//APILINK = 'http://localhost:8000/api/v1/reviews/'; //Local dev
 APILINK = 'https://movie-search-vercel-server.vercel.app/api/v1/reviews/'; //Vercel
 
 
