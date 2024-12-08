@@ -1,20 +1,12 @@
 {
-    
     "type": "module",
-    
+    "scripts": {
+      "start": "node BackEnd/index.js"
+    },
     "dependencies": {
-    
-        
-    "cors": "^2.8.5",
-    
-        
-    "dotenv": "^10.0.0",
-    
-        
-    "express": "^4.21.1",
-    
-        
-    "mongodb": "^6.10.0"
-    
+      "cors": "^2.8.5",
+      "dotenv": "^10.0.0",
+      "express": "^4.21.1",
+      "mongodb": "^6.10.0"
     }
-}
+  }
