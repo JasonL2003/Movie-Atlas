@@ -1,1 +1,3 @@
 .vercel
+/Backend/.env
+/Frontend/.env
