@@ -22,10 +22,7 @@ import reviews from './api/reviews.route.js';
 const app = express();
 
 app.use(cors({
-  origin: ['https://movie-search-vercel-client.vercel.app',
-    'https://movie-search-vercel-client.vercel.app/',
-    'http://movie-search-vercel-client.vercel.app',
-    'https://movie-search-vercel-client-ldqnwytol-jasonlau03s-projects.vercel.app'],
+  origin: '*',
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],  
   allowedHeaders: ['Content-Type', 'Authorization'],
 }));
