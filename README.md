@@ -36,7 +36,7 @@ To get started with **Movie Atlas**, simply go to the website [movieatlas.vercel
 
 #### Reviews
 
-![Screenshot of reviews](Previews/reviews.jpg)
+![Screenshot of reviews](Previews/reviews.png)
 
 ---
 
