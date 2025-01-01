@@ -1,4 +1,5 @@
-/*LOCAL DEV - app.use(cors()) allows all origins
+//LOCAL DEV - app.use(cors()) allows all origins
+/*
 import express from "express"
 import cors from "cors"
 import reviews from "./api/reviews.route.js"
@@ -15,6 +16,7 @@ export default app
 */
 
 //Vercel Code
+
 import express from 'express';
 import cors from 'cors';
 import reviews from './api/reviews.route.js';
