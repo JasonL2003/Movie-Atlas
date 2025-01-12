@@ -6,36 +6,69 @@
         <title>Movie Atlas</title> 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
         <link href="style.css" rel="stylesheet">   
+        <link href="signinstyle.css" rel="stylesheet">  
     </head>
 
-    <body> 
-        <div class="topnav">
-            <a class="active" href="index.html">Movie Atlas</a>
-            <div class="auth-container">
-                <a href="signin.html" class="sign-in">Sign In</a>
-            </div>
-            <div class="search-container">
-                <form role="search" id="form">
-                    <input type="search" id="query" name="q" placeholder="Search MovieAtlas">
-                    <button title="Search" type="submit" id="search-icon"><i class="fas fa-search"></i></button>
-                </form>
-            </div>
-        </div>
+    <!-- Top navigation -->
 
-        <div style="padding-left:16px">
-            <section id="section">
-                <!-- 
-                <div class="row">
-                    <div class="column">
-                        <div class="card">
-                            <center><img src="#" class="thumbnail"></center>
-                            <h3>Movie Title</h3>
-                        </div> 
-                    </div>
+    <body> 
+        <div class="content-wrapper">
+
+            <!-- Top Navigation Bar -->
+            <div class="topnav">
+                <a class="active" href="index.html">Movie Atlas</a>
+                <div class="auth-container">
+                    <button class="sign-in" id="openPopup">Sign In</button>
                 </div>
-                -->
-            </section>
+                <div class="search-container">
+                    <form role="search" id="form">
+                        <input type="search" id="query" name="q" placeholder="Search MovieAtlas">
+                        <button title="Search" type="submit" id="search-icon"><i class="fas fa-search"></i></button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Search Results -->
+            <div style="padding-left:16px">
+                <section id="section">
+                    <!-- Contents Show After Seaching-->
+                </section>
+            </div>
+
         </div>
+        
+
+        <!-- Sign in/Sign up page (Initially hidden) -->
+         
+        <div id="popup" class="hidden">           
+            <span id="closePopup" class="close-btn">&times;</span>
+            <h2 id="popupTitle">Sign In</h2>
+            <form id="authForm">
+                <div class="email-input">
+                    <input type="text" id="email" name="email" placeholder="Email" required>
+                    <span class="user-icon"><i class="fa-solid fa-user"></i></span><br>
+                </div>
+                <div class="password-input">
+                    <input type="password" id="password" name="password" placeholder="Password" required>
+                    <span class="password-icon"><i class="fa-solid fa-lock"></i></span><br>
+                </div>
+                <div id="confirmPasswordDiv" class="confirm-password-input hidden">
+                    <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" required>
+                    <span class="password-icon"><i class="fa-solid fa-lock"></i></span><br>
+                </div>
+                <div class="form-row">
+                    <label><input type="checkbox" id="remember">Remember me</label>
+                    <b><a id="forgot" href="#">Forgot password?</a></b>
+                </div>
+                <button type="submit" id="submitButton">Login</button>
+                <div class="register-link">
+                    <span id="toggleLinkText">Don't have an account? <b><a id="toggleLink" href="#">Register</a></b></span>
+                </div>       
+            </form>           
+        </div>
+        
         <script src="script.js"></script> 
+        <script src="popup.js"></script>
+        <script src="signin.js"></script> 
     </body>
 </html>

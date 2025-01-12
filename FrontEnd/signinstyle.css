@@ -1,0 +1,140 @@
+  .blur-background {
+    filter: blur(2px);
+    opacity: 25%;
+    pointer-events: none;
+    transition: filter 0.2s ease;
+  }
+  
+  #popup{
+    position: fixed;
+    top: 50%; 
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px;
+    width: 500px;
+    height: 400px;
+    border-radius: 20px;
+    background-color: white;
+    z-index: 1000;
+  }
+
+  #popup form{
+    text-align: center;
+  }
+
+  #popup h2 { /*Sign in title*/
+    color: #131720;
+    text-align: center;
+    font-size: 40px;
+    margin-bottom: 60px;
+  }
+
+  #popup #email,
+  #popup #password,
+  #popup #confirmPassword {
+    border: 2px solid #004cff;
+    width: 300px;
+    font-size: 15px;
+    padding: 10px 35px 10px 10px;
+    border-radius: 150px; 
+    margin-bottom: 15px;
+    box-shadow: none;
+  }
+
+  #popup .email-input,
+  #popup .password-input {
+    position: relative;
+    display: inline-block; 
+  }
+
+  #popup .confirm-password-input:not(.hidden) { /*When confirm password is visible, it has these styles*/
+    position: relative;
+    display: inline-block;
+  }
+  
+  #popup .user-icon,
+  #popup .password-icon {
+    position: absolute;
+    right: 15px; 
+    top: 12px;
+    color: #131720;
+    pointer-events: none;
+  }
+
+  #popup .form-row { /*Make remember me and forgot password in 1 row*/
+    display: flex;
+    justify-content: space-between; 
+    margin-bottom: 15px;
+  }
+  
+  #popup #remember{
+    margin-left: 100px;
+    margin-right: 5px;
+  }
+
+  #popup label{
+    font-size: 16px;
+    color: #131720;
+  }
+
+  #popup #forgot {
+    font-size: 16px;
+    float: right;
+    margin-right: 100px;
+  }
+
+  #popup #forgot:hover {
+    color: #9b4dca;
+  }
+
+  #popup button { /*Sign in button*/
+    font-size: 15px;
+    width: 300px;
+    background-color: #004cff;
+    border: 2px solid #004cff;
+    border-radius: 150px;
+    padding: 10px;
+    box-shadow: none;
+    color: #ffffff;
+    margin-bottom: 15px;
+  }
+
+  #popup button:hover {
+    background-color: #131720;
+    border-color: #131720;
+    color: #ffffff;
+}
+
+  .hidden { /*Popup is initially hidden and shown when Sign in is pressed in the home page*/
+    display: none;
+  }
+  
+  .close-btn {
+    position: absolute; 
+    height: 50px;
+    width: 50px; 
+    top: 10px;
+    right: 10px; 
+    font-size: 50px;
+    cursor: pointer;
+    color: #131720;
+    border-radius: 50%;  
+    display: flex; 
+    align-items: center;
+    justify-content: center;
+}
+
+  .close-btn:hover {
+    background-color: #d1d1d1;
+  }
+
+  .register-link {
+    font-size: 16px;
+    color: #131720;
+  }
+
+  .register-link #toggleLink:hover {
+    color: #9b4dca;
+  }
+
+  
