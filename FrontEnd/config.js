@@ -1,4 +1,4 @@
-const CONFIG = {
+const CONFIG = { //movie.js const APILINK = window.apiLink.APILINK;
     isLocal: window.location.protocol === 'file:',
     apiUrls: {
         local: 'http://localhost:8000/api/v1/reviews/',
@@ -6,6 +6,6 @@ const CONFIG = {
     },
 };
 
-window.MovieApp = {
+window.apiLink = {
     APILINK: CONFIG.isLocal ? CONFIG.apiUrls.local : CONFIG.apiUrls.production,
 };
