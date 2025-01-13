@@ -21,6 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function hidePopup() {
       popup.classList.add("hidden");
       contentWrapper.classList.remove("blur-background");
+      toggleToSignIn()
     }
 
     function clearFields(){
@@ -30,6 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
       document.getElementById("email").value = "";
       passwordField.value = "";
       confirmPasswordField.value = "";
+      document.getElementById('remember').checked = false;
     }
   
     function toggleToSignUp() {
@@ -122,6 +124,6 @@ document.addEventListener("DOMContentLoaded", () => {
         
       });
     }
-
+    
   });
   
