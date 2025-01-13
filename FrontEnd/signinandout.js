@@ -22,6 +22,15 @@ document.addEventListener("DOMContentLoaded", () => {
       popup.classList.add("hidden");
       contentWrapper.classList.remove("blur-background");
     }
+
+    function clearFields(){
+      const passwordField = document.getElementById("password");
+      const confirmPasswordField = document.getElementById("confirmPassword");
+
+      document.getElementById("email").value = "";
+      passwordField.value = "";
+      confirmPasswordField.value = "";
+    }
   
     function toggleToSignUp() {
       popupTitle.textContent = "Register";
@@ -51,6 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
     window.addEventListener("click", (e) => {
       if (!popup.contains(e.target) && e.target !== openPopup) {
         hidePopup();
+        clearFields();
       }
     });
   
@@ -65,46 +75,53 @@ document.addEventListener("DOMContentLoaded", () => {
                 } else {
                     toggleToSignIn();
                 }
+                clearFields();
             });
         }
     }
 
     if (authForm) {
+      //Real time validation
+      const passwordField = document.getElementById("password");
+      const confirmPasswordField = document.getElementById("confirmPassword");
+    
+      //Validate whenever either password field changes
+      const validatePasswords = () => {
+        const password = passwordField.value;
+        const confirmPassword = confirmPasswordField.value;
+        
+        if (confirmPassword && password !== confirmPassword) {
+          confirmPasswordField.setCustomValidity("Passwords must match!");
+        } else {
+          confirmPasswordField.setCustomValidity("");
+        }
+      };
+    
+      passwordField.addEventListener("input", validatePasswords);
+      confirmPasswordField.addEventListener("input", validatePasswords);
+    
+      //Form submission
       authForm.addEventListener("submit", (e) => {
         e.preventDefault();
         const email = document.getElementById("email").value;
-        const passwordField = document.getElementById("password");
-        const confirmPasswordField = document.getElementById("confirmPassword");
         const password = passwordField.value;
+        const confirmPassword = confirmPasswordField.value;
     
         if (popupTitle.textContent === "Sign In") {
-          //Implement Sign-in 
-  
-  
-  
-  
+          //Sign-in logic
+
           console.log("Signing in with", { email, password });
         } else {
-          //Implement Sign-up 
-  
-  
-  
-          
-          const confirmPassword = confirmPasswordField.value;
-          if (password !== confirmPassword) {
-            alert("Passwords do not match! Please re-enter.");
-            passwordField.value = "";
-            confirmPasswordField.value = ""; 
-            passwordField.focus(); 
-            return; 
-          }
+          //Sign-up logic
+       
           console.log("Registering with", { email, password, confirmPassword });
-          
-  
         }
+
         hidePopup();
+        clearFields();
+        
       });
-    }   
+    }
 
   });
   
