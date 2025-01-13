@@ -100,15 +100,39 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (popupTitle.textContent === "Sign In") {
             // Sign-in logic
+            document.getElementById("email").setCustomValidity("");
+            document.getElementById("confirmPassword").setCustomValidity("");
+
             console.log("Signing in with", { email, password });
+
         } else {
             // Sign-up logic
-            // Validate passwords on form submission
+
+            //Check email format
+            const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            if (!emailPattern.test(email)) {
+                const emailField = document.getElementById("email");
+                emailField.setCustomValidity("Please enter a valid email address.");
+                emailField.reportValidity(); // Show validity immediately
+                return; // Prevent form submission if email is invalid
+            }
+
+            //Check password format
+            const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/;
+            if (!passwordPattern.test(password)) {
+                const passwordField = document.getElementById("password");
+                passwordField.setCustomValidity("Password must be at least 8 characters long, include one lowercase letter, one uppercase letter, and one number.");
+                passwordField.reportValidity(); // Show validity immediately
+                return; // Prevent form submission if password is invalid
+            }
+
+            //Check that password equals confirmpassword 
             if (password !== confirmPassword) {
                 confirmPasswordField.setCustomValidity("Passwords must match!");
                 confirmPasswordField.reportValidity(); //Show validity on the first form submit
                 return; //Prevent form submission if passwords don't match
             }
+
             console.log("Registering with", { email, password, confirmPassword });
         }
 
@@ -116,9 +140,13 @@ document.addEventListener("DOMContentLoaded", () => {
         clearFields();
     });
 
-    //Clear validation on password change
+    //Clear validation on email and password change
+    document.getElementById("email").addEventListener("input", () => {
+      document.getElementById("email").setCustomValidity(""); 
+    });
+  
     document.getElementById("password").addEventListener("input", () => {
-        document.getElementById("confirmPassword").setCustomValidity("");
+        document.getElementById("password").setCustomValidity("");
     });
 
     document.getElementById("confirmPassword").addEventListener("input", () => {
