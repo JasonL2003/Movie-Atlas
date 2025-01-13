@@ -41,6 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
     formRow.style.display = "none"; 
     popup.style.height = "425px";
     toggleLinkText.innerHTML = "Already have an account? <b><a id='toggleLink' href='#'>Sign In</a></b>";
+    document.getElementById("confirmPassword").setAttribute("required", "true");
     attachToggleEvent(); //Reattach event listener to the link since it has changed
   }
 
@@ -48,6 +49,8 @@ document.addEventListener("DOMContentLoaded", () => {
     popupTitle.textContent = "Sign In";
     submitButton.textContent = "Login";
     confirmPasswordDiv.classList.add("hidden");
+
+    document.getElementById("confirmPassword").removeAttribute("required");
 
     formRow.style.display = "flex";
     formRow.style.justifyContent = "space-between";
