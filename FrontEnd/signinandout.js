@@ -90,7 +90,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   if (authForm) {
-    // Form submission
+    //Form submission
     authForm.addEventListener("submit", (e) => {
         e.preventDefault();
         const email = document.getElementById("email").value;
@@ -98,23 +98,24 @@ document.addEventListener("DOMContentLoaded", () => {
         const confirmPassword = document.getElementById("confirmPassword").value; 
         const confirmPasswordField = document.getElementById("confirmPassword");
 
+        //Sign-in 
         if (popupTitle.textContent === "Sign In") {
-            // Sign-in logic
             document.getElementById("email").setCustomValidity("");
             document.getElementById("confirmPassword").setCustomValidity("");
 
+            //Sign-In logic
+            
+
             console.log("Signing in with", { email, password });
-
+        //Sign-up 
         } else {
-            // Sign-up logic
-
             //Check email format
             const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
             if (!emailPattern.test(email)) {
                 const emailField = document.getElementById("email");
                 emailField.setCustomValidity("Please enter a valid email address.");
-                emailField.reportValidity(); // Show validity immediately
-                return; // Prevent form submission if email is invalid
+                emailField.reportValidity(); //Show validity on first form submission
+                return; //Prevent form submission if invalid
             }
 
             //Check password format
@@ -122,16 +123,19 @@ document.addEventListener("DOMContentLoaded", () => {
             if (!passwordPattern.test(password)) {
                 const passwordField = document.getElementById("password");
                 passwordField.setCustomValidity("Password must be at least 8 characters long, include one lowercase letter, one uppercase letter, and one number.");
-                passwordField.reportValidity(); // Show validity immediately
-                return; // Prevent form submission if password is invalid
+                passwordField.reportValidity(); 
+                return; 
             }
 
             //Check that password equals confirmpassword 
             if (password !== confirmPassword) {
                 confirmPasswordField.setCustomValidity("Passwords must match!");
-                confirmPasswordField.reportValidity(); //Show validity on the first form submit
-                return; //Prevent form submission if passwords don't match
+                confirmPasswordField.reportValidity();
+                return; 
             }
+
+            //Sign-up Logic
+
 
             console.log("Registering with", { email, password, confirmPassword });
         }
