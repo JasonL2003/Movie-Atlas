@@ -90,46 +90,39 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   if (authForm) {
-    //Real time validation
-    const passwordField = document.getElementById("password");
-    const confirmPasswordField = document.getElementById("confirmPassword");
-  
-    //Validate whenever either password field changes
-    const validatePasswords = () => {
-      const password = passwordField.value;
-      const confirmPassword = confirmPasswordField.value;
-      
-      if (confirmPassword && password !== confirmPassword) {
-        confirmPasswordField.setCustomValidity("Passwords must match!");
-      } else {
-        confirmPasswordField.setCustomValidity("");
-      }
-    };
-  
-    passwordField.addEventListener("input", validatePasswords);
-    confirmPasswordField.addEventListener("input", validatePasswords);
-  
-    //Form submission
+    // Form submission
     authForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const email = document.getElementById("email").value;
-      const password = passwordField.value;
-      const confirmPassword = confirmPasswordField.value;
-  
-      if (popupTitle.textContent === "Sign In") {
-        //Sign-in logic
+        e.preventDefault();
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;  
+        const confirmPassword = document.getElementById("confirmPassword").value; 
+        const confirmPasswordField = document.getElementById("confirmPassword");
 
-        console.log("Signing in with", { email, password });
-      } else {
-        //Sign-up logic
-     
-        console.log("Registering with", { email, password, confirmPassword });
-      }
+        if (popupTitle.textContent === "Sign In") {
+            // Sign-in logic
+            console.log("Signing in with", { email, password });
+        } else {
+            // Sign-up logic
+            // Validate passwords on form submission
+            if (password !== confirmPassword) {
+                confirmPasswordField.setCustomValidity("Passwords must match!");
+                confirmPasswordField.reportValidity(); //Show validity on the first form submit
+                return; //Prevent form submission if passwords don't match
+            }
+            console.log("Registering with", { email, password, confirmPassword });
+        }
 
-      hidePopup();
-      clearFields();
-      
+        hidePopup();
+        clearFields();
+    });
+
+    //Clear validation on password change
+    document.getElementById("password").addEventListener("input", () => {
+        document.getElementById("confirmPassword").setCustomValidity("");
+    });
+
+    document.getElementById("confirmPassword").addEventListener("input", () => {
+        document.getElementById("confirmPassword").setCustomValidity("");
     });
   }
-  
 });
