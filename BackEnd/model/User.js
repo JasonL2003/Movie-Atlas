@@ -13,6 +13,6 @@ const userSchema = new mongoose.Schema({
     },
 });
 
-const User = mongoose.model("User", userSchema);
+const User = mongoose.model("User", userSchema); //Defines collections name - Mongoose converts "User" to "users"
 
 export default User;

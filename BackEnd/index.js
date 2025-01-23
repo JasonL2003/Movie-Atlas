@@ -1,5 +1,6 @@
 import app from "./server.js"
 import mongodb from "mongodb"
+import mongoose from 'mongoose';
 import dotenv from 'dotenv'
 import ReviewsDAO from "./dao/reviewsDAO.js"
 dotenv.config();
@@ -11,22 +12,42 @@ const uri = process.env.MONGODB_URI;
 
 const port = 8000;
 
-MongoClient.connect(
-    uri,
-    {
-        maxPoolSize: 50,
-        wtimeoutMS:2500,
+const connectMongoClient = async () => {
+    try {
+        const client = await MongoClient.connect(uri, {
+            maxPoolSize: 50,
+            wtimeoutMS: 2500,
+        });
+        console.log("MongoClient connected to MongoDB");
+        return client;
+    } catch (err) {
+        console.error('MongoClient connection error:', err.stack);
+        process.exit(1);
+    }
+};
+
+const connectDB = async () => { //Specifically for mongoose
+    try {
+        await mongoose.connect(uri);
+        console.log("Mongoose connected to MongoDB");
+    } catch (error) {
+        console.error("Mongoose connection error:", error);
+        process.exit(1); //Exit if connection fails
+    }
+};
+
+//Connect both MongoClient and Mongoose
+Promise.all([connectMongoClient(), connectDB()])
+    .then(([client]) => {
+        ReviewsDAO.injectDB(client);
+        app.listen(port, () => {
+            console.log(`listening on port ${port}`);
+        });
     })
     .catch(err => {
-        console.error(err.stack)
-        process.exit(1)
-    })
-    .then(async client => {
-        await ReviewsDAO.injectDB(client)
-        app.listen(port, () => {
-            console.log(`listening on port ${port}`)
-        })
-    })
+        console.error(err.stack);
+        process.exit(1);
+    });
 
 
 

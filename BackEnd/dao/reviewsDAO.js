@@ -8,7 +8,7 @@ export default class ReviewsDAO {
             return;
         }
         try {
-            reviews = await conn.db("reviews").collection("reviews");
+            reviews = await conn.db("database").collection("reviews");
         } catch (e) {
             console.error(`Unable to establish collection handles in userDAO: ${e}`);
         }
@@ -88,7 +88,7 @@ export default class ReviewsDAO {
                 review: review,
                 createdAt: new Date()
             }
-            return await reviews.insertOne(reviewDoc);
+            return await reviews.insertOne(reviewDoc); //If database or connection doesn't exist, it creates it
         } catch (e) {
             console.error(`Unable to post review: ${e}`);
             return { error: e.message || "Unable to post review" };

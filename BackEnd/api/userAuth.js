@@ -19,7 +19,7 @@ router.post("/signup", async (req, res) => {
 
         //Create new user
         const newUser = new User({ email, password: hashedPassword });
-        await newUser.save();
+        await newUser.save(); //If collection doesn't exist, it creates it
 
         res.status(201).json({ message: "User registered successfully" });
     } catch (error) {
