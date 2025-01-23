@@ -53,7 +53,13 @@ app.use("/api", userAuthRoutes);
 //Reviews route
 app.use('/api/v1/reviews', reviews);
 
-app.use('*', (req, res) => res.status(404).json({ error: 'Route not found' }));
 
+
+//Vercel deployment
+app.get('/', (req, res) => {
+  res.send('Server is running!');
+});
+
+app.use('*', (req, res) => res.status(404).json({ error: 'Route not found' }));
 
 export default app;
