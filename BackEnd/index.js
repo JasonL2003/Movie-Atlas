@@ -28,7 +28,7 @@ const connectMongoClient = async () => {
 
 const connectDB = async () => { //Specifically for mongoose
     try {
-        await mongoose.connect(uri);
+        await mongoose.connect(uri, { dbName: 'database' }); //Specify database
         console.log("Mongoose connected to MongoDB");
     } catch (error) {
         console.error("Mongoose connection error:", error);
