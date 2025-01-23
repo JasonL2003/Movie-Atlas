@@ -7,7 +7,7 @@ dotenv.config();
 const MongoClient = mongodb.MongoClient
 
 //URI Before MONGODB Integration on Vercel: const uri = `mongodb+srv://${mongo_username}:${mongo_password}@cluster0.v37my.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`
-const uri = process.env.MONGODB_URI_REVIEWS;  
+const uri = process.env.MONGODB_URI;  
 
 const port = 8000;
 
