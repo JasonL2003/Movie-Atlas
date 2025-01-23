@@ -1,6 +1,10 @@
 import express from 'express';
 import cors from 'cors';
 import reviews from './api/reviews.route.js';
+import dotenv from 'dotenv'
+import mongoose from 'mongoose';
+import userAuthRoutes from './api/userAuth.js';
+dotenv.config();
 
 const app = express();
 
@@ -23,12 +27,31 @@ if (isProduction) {
   app.use(cors());
 }
 
+
+
+//User route
+const uri = process.env.MONGODB_URI;
+
 app.use(express.json());
 
-app.get('/', (req, res) => {
-  res.send('Server is running!');
-});
+const connectDB = async () => {//Specifically for mongoose
+  try {
+    const uri = process.env.MONGODB_URI;
+    await mongoose.connect(uri);
+    console.log("Connected to MongoDB");
+  } catch (error) {
+    console.error("MongoDB connection error:", error);
+    process.exit(1); //Exit if connection fails
+  }
+};
 
+connectDB(); //Mongoose connection
+
+app.use("/api", userAuthRoutes);
+
+
+
+//Reviews route
 app.use('/api/v1/reviews', reviews);
 
 app.use('*', (req, res) => res.status(404).json({ error: 'Route not found' }));

@@ -90,6 +90,9 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   if (authForm) {
+
+    const USERLINK = window.userAuth.AUTHLINK; //Used for fetching from userAuth.js
+
     //Form submission
     authForm.addEventListener("submit", (e) => {
         e.preventDefault();
@@ -135,13 +138,40 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             //Sign-up Logic
-
-
-            console.log("Registering with", { email, password, confirmPassword });
+            fetch(USERLINK, {
+              method: "POST",
+              headers:{
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ email, password}),
+            })
+              .then((response) => {
+                if(!response.ok){
+                  return response.json().then((data) => {
+                    if (data.message === "User already exists") {
+                        throw new Error("This account has already been registered.");
+                    } else {
+                        throw new Error("Failed to sign up");
+                    }
+                });
+                }
+                return response.json();
+              })
+              .then((data) => {
+                alert("Sign up successful!");
+                console.log("Registering with", { email, password, confirmPassword });
+                console.log("User registered:", data);
+              })
+              .catch((error) => {
+                console.error("Error during sign-up:", error);
+                alert(error.message);
+              });
         }
-
+        
+        //Hide popup after signing in or signing up
         hidePopup();
         clearFields();
+
     });
 
     //Clear validation on email and password change
