@@ -30,13 +30,12 @@ if (isProduction) {
 
 
 //User route
-const uri = process.env.MONGODB_URI;
+const uri = process.env.MONGODB_URI_REVIEWS;
 
 app.use(express.json());
 
 const connectDB = async () => {//Specifically for mongoose
   try {
-    const uri = process.env.MONGODB_URI;
     await mongoose.connect(uri);
     console.log("Connected to MongoDB");
   } catch (error) {
