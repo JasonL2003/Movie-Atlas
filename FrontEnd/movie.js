@@ -7,7 +7,7 @@ APILINK = 'http://localhost:8000/api/v1/reviews/'; //Local dev
 APILINK = 'https://movie-search-vercel-server.vercel.app/api/v1/reviews/'; //Vercel
 */
 
-const APILINK = window.apiLink.APILINK;
+const APILINK = window.apiLink
 
 const main = document.getElementById("section");
 const title = document.getElementById("title");

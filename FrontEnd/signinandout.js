@@ -91,7 +91,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (authForm) {
 
-    const USERLINK = window.userAuth.AUTHLINK; //Used for fetching from userAuth.js
+    const SIGNUPLINK = window.userAuthSignUp; //Used for fetching from userAuth.js
+    const SIGNINLINK = window.userAuthSignIn;
 
     //Form submission
     authForm.addEventListener("submit", (e) => {
@@ -107,9 +108,23 @@ document.addEventListener("DOMContentLoaded", () => {
             document.getElementById("confirmPassword").setCustomValidity("");
 
             //Sign-In logic
+            fetch(SIGNINLINK, {
+              method: "POST",
+              headers: { "Content-Type": "application/json"},
+              body: JSON.stringify({ email, password }),
+            })
+            .then(response => {
+              if (!response.ok) {  //Check if response status is not OK (i.e., not 2xx)
+                throw new Error("Invalid email or password");  
+              }
+              return response.json();
+            })
+            .then(data => {
+              localStorage.setItem("token", data.token);
+              alert("Login Successful");
+            }) 
+            .catch(error => alert("Invalid Login"));
             
-
-            console.log("Signing in with", { email, password });
         //Sign-up 
         } else {
             //Check email format
@@ -138,7 +153,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             //Sign-up Logic
-            fetch(USERLINK, {
+            fetch(SIGNUPLINK, {
               method: "POST",
               headers:{
                 "Content-Type": "application/json",
@@ -149,7 +164,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 if(!response.ok){
                   return response.json().then((data) => {
                     if (data.message === "User already exists") {
-                        throw new Error("This account has already been registered.");
+                        throw new Error("This account already exists.");
                     } else {
                         throw new Error("Failed to sign up");
                     }

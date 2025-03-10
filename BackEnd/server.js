@@ -3,6 +3,7 @@ import cors from 'cors';
 import reviews from './api/reviews.route.js';
 import dotenv from 'dotenv'
 import userAuthRoutes from './api/userAuth.js';
+import userProfileRoutes from './api/userProfile.js';
 dotenv.config();
 
 const app = express();
@@ -30,6 +31,9 @@ app.use(express.json());
 
 //User route
 app.use("/api", userAuthRoutes);
+
+//Profile route
+app.use("/api", userProfileRoutes);
 
 //Reviews route
 app.use('/api/v1/reviews', reviews);
