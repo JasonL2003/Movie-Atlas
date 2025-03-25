@@ -46,8 +46,12 @@
             <span id="closePopup" class="close-btn">&times;</span>
             <h2 id="popupTitle">Sign In</h2>
             <form id="authForm">
+                <div id="usernameDiv" class="username-input hidden">
+                    <input type="text" id="username" name="username" placeholder="Username" required>
+                    <span class="user-icon"><i class="fa-solid fa-user"></i></span><br>
+                </div>
                 <div class="email-input">
-                    <input type="text" id="email" name="email" placeholder="Email" required>
+                    <input type="text" id="email" name="email" placeholder="Username or Email" required>
                     <span class="user-icon"><i class="fa-solid fa-user"></i></span><br>
                 </div>
                 <div class="password-input">

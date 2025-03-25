@@ -12,7 +12,7 @@
     transform: translate(-50%, -50%);
     border: 1px;
     width: 500px;
-    height: 400px;
+    height: 370px;
     border-radius: 20px;
     background-color: white;
     z-index: 1000;
@@ -26,9 +26,10 @@
     color: #131720;
     text-align: center;
     font-size: 40px;
-    margin-bottom: 60px;
+    margin-bottom: 30px;
   }
 
+  #popup #username,
   #popup #email,
   #popup #password,
   #popup #confirmPassword {
@@ -47,11 +48,12 @@
     display: inline-block; 
   }
 
-  #popup .confirm-password-input:not(.hidden) { /*When confirm password is visible, it has these styles*/
-    position: relative;
-    display: inline-block;
-  }
-  
+  #popup .confirm-password-input:not(.hidden), /*When confirm password is visible, it has these styles*/
+  #popup .username-input:not(.hidden) {
+  position: relative;
+  display: inline-block;
+  } 
+    
   #popup .user-icon,
   #popup .password-icon {
     position: absolute;

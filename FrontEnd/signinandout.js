@@ -10,6 +10,7 @@ const authForm = document.getElementById("authForm");
 const popupTitle = document.getElementById("popupTitle");
 const submitButton = document.getElementById("submitButton");
 const confirmPasswordDiv = document.getElementById("confirmPasswordDiv");
+const usernameDiv = document.getElementById("usernameDiv");
 const toggleLinkText = document.getElementById("toggleLinkText");
 const formRow = document.querySelector(".form-row");
 
@@ -27,40 +28,45 @@ function hidePopup() {
 }
 
 function clearFields(){
-  const passwordField = document.getElementById("password");
-  const confirmPasswordField = document.getElementById("confirmPassword");
-
+  document.getElementById("password").value = "";
+  document.getElementById("confirmPassword").value = "";
   document.getElementById("email").value = "";
-  passwordField.value = "";
-  confirmPasswordField.value = "";
+  document.getElementById("username").value = "";
   document.getElementById('remember').checked = false;
 }
 
 function toggleToSignUp() {
   popupTitle.textContent = "Register";
   submitButton.textContent = "Sign Up";
+  document.getElementById("email").placeholder = "Email";
+  usernameDiv.classList.remove("hidden");
   confirmPasswordDiv.classList.remove("hidden");
   formRow.style.display = "none"; 
-  popup.style.height = "425px";
+  popup.style.height = "450px";
   toggleLinkText.innerHTML = "Already have an account? <b><a id='toggleLink' href='#'>Sign In</a></b>";
+
+  document.getElementById("username").setAttribute("required", "true");
   document.getElementById("confirmPassword").setAttribute("required", "true");
-  attachToggleEvent(); //Reattach event listener to the link since it has changed
+  attachToggleEvent(); //Reattach event listener to the register/sign in link since it has changed
 }
 
 function toggleToSignIn() {
   popupTitle.textContent = "Sign In";
   submitButton.textContent = "Login";
+  document.getElementById("email").placeholder = "Username or Email";
+  usernameDiv.classList.add("hidden");
   confirmPasswordDiv.classList.add("hidden");
 
+  document.getElementById("username").removeAttribute("required");
   document.getElementById("confirmPassword").removeAttribute("required");
 
   formRow.style.display = "flex";
   formRow.style.justifyContent = "space-between";
   formRow.style.marginBottom = "15px"; 
 
-  popup.style.height = "400px";
+  popup.style.height = "370px";
   toggleLinkText.innerHTML = "Don't have an account? <b><a id='toggleLink' href='#'>Register</a></b>";
-  attachToggleEvent(); //Reattach event listener to the link since it has changed
+  attachToggleEvent(); //Reattach event listener to the register/sign in link since it has changed
 }
 
 //Show popup when sign in is clicked, close popup when user clicks hidepopup X button.
@@ -80,7 +86,7 @@ if (!profile.contains(e.target) && !logout.contains(e.target)) {
 }
 });
 
-function attachToggleEvent() { //Reattaches event listener to the link everytime it changes.
+function attachToggleEvent() { //Reattaches event listener to the register/sign in link everytime it changes.
   const updatedToggleLink = document.getElementById("toggleLink");
   if (updatedToggleLink) {
       updatedToggleLink.addEventListener("click", (e) => {
@@ -98,14 +104,11 @@ function attachToggleEvent() { //Reattaches event listener to the link everytime
 
 //Function to handle UI based on token status
 function tokenStatus() {
-  const token = localStorage.getItem("token");
-
+  const token = localStorage.getItem('token'); // Fetch fresh token each time
   if (token) {
-      //User is logged in, show user menu
       openPopup.style.display = "none";
       profile.style.display = "block";
   } else {
-      //User is not logged in, show sign-in button
       openPopup.style.display = "block";
       profile.style.display = "none";
   }
@@ -143,6 +146,7 @@ if (authForm) {
   //Form submission
   authForm.addEventListener("submit", (e) => {
       e.preventDefault();
+      const username = document.getElementById("username").value;
       const email = document.getElementById("email").value;
       const password = document.getElementById("password").value;  
       const confirmPassword = document.getElementById("confirmPassword").value; 
@@ -157,17 +161,22 @@ if (authForm) {
           fetch(SIGNINLINK, {
             method: "POST",
             headers: { "Content-Type": "application/json"},
-            body: JSON.stringify({ email, password }),
+            body: JSON.stringify({ email, password }), //Email input can either be the email or username
           })
           .then(response => {
             if (!response.ok) {  //Check if response status is not OK (i.e., not 2xx)
-              throw new Error("Invalid email or password");  
+              throw new Error("Invalid username, email, or password");  
             }
             return response.json();
           })
           //Successful login
           .then(data => {
             localStorage.setItem("token", data.token);
+
+            //Hide popup after signing in or signing up successfully
+            hidePopup();
+            clearFields();
+
             alert("Login Successful");
 
             openPopup.style.display = "none";
@@ -177,13 +186,22 @@ if (authForm) {
           
       //Sign-up 
       } else {
+          //Check username format 
+          const usernamePattern = /^[a-zA-Z0-9_-]{3,16}$/; //3-16 characters long
+          if (!usernamePattern.test(username)){
+              const usernameField = document.getElementById("username");
+              usernameField.setCustomValidity("Username must be 3-16 characters long.");
+              usernameField.reportValidity(); 
+              return; 
+          }
+
           //Check email format
           const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
           if (!emailPattern.test(email)) {
               const emailField = document.getElementById("email");
               emailField.setCustomValidity("Please enter a valid email address.");
-              emailField.reportValidity(); //Show validity on first form submission
-              return; //Prevent form submission if invalid
+              emailField.reportValidity(); 
+              return; 
           }
 
           //Check password format
@@ -208,14 +226,18 @@ if (authForm) {
             headers:{
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({ email, password}),
+            body: JSON.stringify({ username, email, password }),
           })
             .then((response) => {
               if(!response.ok){
                 return response.json().then((data) => {
-                  if (data.message === "User already exists") {
-                      throw new Error("This account already exists.");
-                  } else {
+                  if (data.message === "Username already exists") {
+                      throw new Error("Username already exists.");
+                  } 
+                  else if (data.message === "Email already exists") {
+                    throw new Error("Email already exists");
+                  } 
+                  else {
                       throw new Error("Failed to sign up");
                   }
               });
@@ -223,8 +245,12 @@ if (authForm) {
               return response.json();
             })
             .then((data) => {
+              //Hide popup after signing in or signing up successfully
+              hidePopup();
+              clearFields();
+
               alert("Sign up successful!");
-              console.log("Registering with", { email, password, confirmPassword });
+              console.log("Registering with", { username, email, password });
               console.log("User registered:", data);
             })
             .catch((error) => {
@@ -232,14 +258,13 @@ if (authForm) {
               alert(error.message);
             });
       }
-      
-      //Hide popup after signing in or signing up
-      hidePopup();
-      clearFields();
-
   });
 
-  //Clear validation on email and password change
+  //Clears custom validation message when the user starts typing for username, email, and password
+  document.getElementById("username").addEventListener("input", () => {
+    document.getElementById("username").setCustomValidity(""); 
+  });
+
   document.getElementById("email").addEventListener("input", () => {
     document.getElementById("email").setCustomValidity(""); 
   });
