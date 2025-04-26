@@ -107,30 +107,36 @@ const tokenRequestLink = window.tokenRequest //Used for fetching from userProfil
 
 //Function to handle UI based on token status
 function tokenStatus() {
-  fetch(tokenRequestLink, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": `Bearer ${localStorage.getItem('token')}` //Attach the token
-    }
-  })
-  .then(response => response.json())
-  .then(data => {
-    console.log("User Profile:", data);
-    const username = data.username;     
-    const usernameShow = document.getElementById('usernameShow');
-    if (username && usernameShow) {
-      usernameShow.innerText = username //Set the username to show beside profile
-    }
-  })
-  .catch(error => {
-    console.error("Unauthorized:", error);
+  const token = localStorage.getItem('token');
+  if (!token) {
+    //If there's no token, it means the user is logged out
     openPopup.style.display = "block";
-    profile.style.display = "none"; //Do not show profile
-  });
-
-  openPopup.style.display = "none";
-  profile.style.display = "block"; //Show profile
+    profile.style.display = "none";  //Hide profile
+  }
+  else{
+    fetch(tokenRequestLink, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${localStorage.getItem('token')}` //Attach the token
+      }
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log("User Profile:", data);
+      const username = data.username;     
+      const usernameShow = document.getElementById('usernameShow');
+      if (username && usernameShow) {
+        usernameShow.innerText = username //Set the username to show beside profile
+      }
+    })
+    .catch(error => {
+      console.error("Unauthorized:", error);
+    });
+  
+    openPopup.style.display = "none";
+    profile.style.display = "block"; //Show profile
+  }
 }
 
 //When the page is loaded, check the token status
