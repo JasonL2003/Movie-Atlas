@@ -63,9 +63,9 @@ router.post("/signin", async (req, res) => {
         }
 
         const payload = { //Data to be transmitted and received
+            userId: user._id,  
             username: user.username,
-            email: user.email,  
-            password: user.password
+            email: user.email
         };
 
         //Generate JWT Token

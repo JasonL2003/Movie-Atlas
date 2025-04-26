@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const authenticateJWT = (req, res, next) => {
+
     const token = req.header("Authorization");
 
     if (!token) {

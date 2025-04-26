@@ -1,6 +1,7 @@
 const popup = document.getElementById("popup");
 const openPopup = document.getElementById("openPopup");
 const profile = document.getElementById("profile");
+const dropdownMenu = document.getElementById("dropdownMenu");
 const logout = document.getElementById("logout-btn");
 
 const closePopup = document.getElementById("closePopup");
@@ -80,9 +81,9 @@ if (!popup.contains(e.target) && e.target !== openPopup) {
   hidePopup();
   clearFields();
 }
-//Close logout button when clicked anywhere outside
-if (!profile.contains(e.target) && !logout.contains(e.target)) {
-  logout.style.display = "none";  //Hide logout button
+//Close dropdownmenu when clicked anywhere outside
+if (!profile.contains(e.target) && !dropdownMenu.contains(e.target)) {
+  dropdownMenu.style.display = "none";  //Hide dropdownmenu
 }
 });
 
@@ -123,11 +124,11 @@ document.addEventListener("DOMContentLoaded", () => {
 document.getElementById("profile").addEventListener("click", () => {
   tokenStatus();
 
-  //Toggle logout button visibility 
-  if (logout.style.display === "none") {
-    logout.style.display = "block";  //Show logout button
+  //Toggle dropdownmenu visibility 
+  if (dropdownMenu.style.display === "none") {
+    dropdownMenu.style.display = "block";  //Show dropdownmenu 
   } else {
-    logout.style.display = "none";  //Hide logout button (optional, if you want it to disappear on second click)
+    dropdownMenu.style.display = "none";  //Hide dropdownmenu button (optional, if you want it to disappear on second click)
   }
 });
 
@@ -142,6 +143,7 @@ if (authForm) {
 
   const SIGNUPLINK = window.userAuthSignUp; //Used for fetching from userAuth.js
   const SIGNINLINK = window.userAuthSignIn;
+  const tokenRequestLink = window.tokenRequest //Used for fetching from userProfile.js
 
   //Form submission
   authForm.addEventListener("submit", (e) => {
@@ -180,7 +182,30 @@ if (authForm) {
             alert("Login Successful");
 
             openPopup.style.display = "none";
-            profile.style.display = "block";
+
+            //fetch token and display username and profile picture
+            fetch(tokenRequestLink, {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${localStorage.getItem('token')}` // Attach the token
+              }
+            })
+            .then(response => response.json())
+            .then(data => {
+              console.log("User Profile:", data);
+              const username = data.username;     
+              const usernameShow = document.getElementById('usernameShow');
+              if (username && usernameShow) {
+                usernameShow.innerText = username //Set the username to show beside profile
+              }
+            })
+            .catch(error => {
+              console.error("Unauthorized:", error);
+            });
+
+            profile.style.display = "block"; //Show profile
+
           }) 
           .catch(error => alert(error.message)); 
           

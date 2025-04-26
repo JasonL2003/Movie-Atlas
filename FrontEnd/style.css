@@ -61,6 +61,9 @@ body {
 
 .topnav .auth-container .profile {
     display: none;
+}
+
+.topnav .auth-container .profilePicture {
     width: 45px;  
     height: 45px;
     border-radius: 50%;
@@ -68,8 +71,9 @@ body {
     cursor: pointer;
 }
 
-.topnav .auth-container .logout {
+.topnav .auth-container .dropdown-menu {
     display: none;
+    
 }
 
 .topnav .auth-container .sign-in:hover {

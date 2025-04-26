@@ -19,8 +19,15 @@
                 <a class="active" href="index.html">Movie Atlas</a>
                 <div class="auth-container">
                     <button class="sign-in" id="openPopup">Sign In</button>
-                    <button class="profile" id="profile" aria-label="Profile"><i class="fa-regular fa-user fa-xl"></i></button>
-                    <button class="logout" id="logout-btn">Logout</button>
+                    <div class ="profile" id="profile">
+                        <button class="profilePicture" id="profilePicture" aria-label="ProfilePicture"><i class="fa-regular fa-user fa-xl"></i></button>
+                        <p id="usernameShow"></p>
+                    </div>
+                    <div class="dropdown-menu" id="dropdownMenu">
+                        <a href="#">My Account</a>
+                        <a href="#">Settings</a>
+                        <a href="#" id="logout-btn">Logout</a>
+                    </div>
                 </div>
                 <div class="search-container">
                     <form role="search" id="form">
