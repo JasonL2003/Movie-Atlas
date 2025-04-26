@@ -103,16 +103,34 @@ function attachToggleEvent() { //Reattaches event listener to the register/sign 
   }
 }
 
+const tokenRequestLink = window.tokenRequest //Used for fetching from userProfile.js
+
 //Function to handle UI based on token status
 function tokenStatus() {
-  const token = localStorage.getItem('token'); // Fetch fresh token each time
-  if (token) {
-      openPopup.style.display = "none";
-      profile.style.display = "block";
-  } else {
-      openPopup.style.display = "block";
-      profile.style.display = "none";
-  }
+  fetch(tokenRequestLink, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${localStorage.getItem('token')}` //Attach the token
+    }
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log("User Profile:", data);
+    const username = data.username;     
+    const usernameShow = document.getElementById('usernameShow');
+    if (username && usernameShow) {
+      usernameShow.innerText = username //Set the username to show beside profile
+    }
+  })
+  .catch(error => {
+    console.error("Unauthorized:", error);
+    openPopup.style.display = "block";
+    profile.style.display = "none"; //Do not show profile
+  });
+
+  openPopup.style.display = "none";
+  profile.style.display = "block"; //Show profile
 }
 
 //When the page is loaded, check the token status
@@ -143,7 +161,6 @@ if (authForm) {
 
   const SIGNUPLINK = window.userAuthSignUp; //Used for fetching from userAuth.js
   const SIGNINLINK = window.userAuthSignIn;
-  const tokenRequestLink = window.tokenRequest //Used for fetching from userProfile.js
 
   //Form submission
   authForm.addEventListener("submit", (e) => {
